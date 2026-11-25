@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CLASS FEEDBACK</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;background:#f5f6fa;color:#1c1f2a}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 24px}
+h1{margin:0;font-size:20px;letter-spacing:3px;font-weight:800}
+button{font:inherit;cursor:pointer;border:0}
+.link{background:#fff;border:1px solid #d9dce6;border-radius:999px;padding:8px 16px;font-size:14px}
+.link:hover{background:#eef0f7}
+main{max-width:640px;margin:0 auto;padding:40px 20px;text-align:center}
+h2{font-size:28px;margin:40px 0 32px}
+.votes{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.vote{flex:1 1 150px;background:#fff;border-radius:20px;padding:28px 12px;font-size:20px;box-shadow:0 2px 10px rgba(0,0,0,.06);transition:.15s}
+.vote:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.1)}
+.vote:disabled{opacity:.5;cursor:default;transform:none}
+.msg{margin-top:28px;min-height:24px;font-weight:600}
+.ok{color:#1a8f4c}.err{color:#d33}
+input{width:100%;padding:12px 14px;margin:6px 0;border:1px solid #d9dce6;border-radius:12px;font:inherit}
+.card{background:#fff;border-radius:20px;padding:28px;box-shadow:0 2px 10px rgba(0,0,0,.06);text-align:left}
+.primary{background:#3b5bdb;color:#fff;border-radius:12px;padding:12px;width:100%;margin-top:10px}
+.danger{background:#fff;color:#d33;border:1px solid #d33;border-radius:999px;padding:8px 16px;font-size:14px}
+.total{font-size:18px;margin-bottom:20px;text-align:center}
+.total b{font-size:36px;display:block}
+.row{margin:16px 0}
+.row .lbl{display:flex;justify-content:space-between;font-size:15px;margin-bottom:6px}
+.bar{height:16px;background:#eceef5;border-radius:8px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:8px;transition:width .4s}
+.actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+  <h1>CLASS FEEDBACK</h1>
+  <button class="link" id="authBtn">관리자 로그인</button>
+</header>
+<main>
+  <section id="student">
+    <h2>오늘 수업은 어땠나요?</h2>
+    <div class="votes">
+      <button class="vote" data-r="satisfied">😊 만족</button>
+      <button class="vote" data-r="neutral">😐 보통</button>
+      <button class="vote" data-r="dissatisfied">😞 불만족</button>
+    </div>
+    <div class="msg" id="voteMsg"></div>
+  </section>
+
+  <section id="login" class="hidden">
+    <form class="card" id="loginForm">
+      <h3 style="margin-top:0">관리자 로그인</h3>
+      <input type="email" id="email" placeholder="이메일" required autocomplete="username">
+      <input type="password" id="password" placeholder="비밀번호" required autocomplete="current-password">
+      <button class="primary" type="submit">로그인</button>
+      <div class="msg err" id="loginMsg"></div>
+      <button type="button" class="link" id="backBtn">← 학생 화면</button>
+    </form>
+  </section>
+
+  <section id="admin" class="hidden">
+    <div class="card">
+      <div class="total">전체 투표 수<b id="total">0</b></div>
+      <div class="row"><div class="lbl"><span>😊 만족</span><span id="t-satisfied"></span></div><div class="bar"><i id="b-satisfied" style="background:#2fb344"></i></div></div>
+      <div class="row"><div class="lbl"><span>😐 보통</span><span id="t-neutral"></span></div><div class="bar"><i id="b-neutral" style="background:#f59f00"></i></div></div>
+      <div class="row"><div class="lbl"><span>😞 불만족</span><span id="t-dissatisfied"></span></div><div class="bar"><i id="b-dissatisfied" style="background:#e03131"></i></div></div>
+      <div class="msg err" id="adminMsg"></div>
+      <div class="actions">
+        <button class="link" id="refreshBtn">새로고침</button>
+        <button class="danger" id="resetBtn">투표 결과 초기화</button>
+        <button class="link" id="logoutBtn">로그아웃</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
